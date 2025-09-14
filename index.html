@@ -1,0 +1,104 @@
+<!-- # Corrected HTML template for Heart Disease Prediction
+html_template = ''' -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <style>
+        body {font-family: Arial, sans-serif; background-color: #104981; margin: 20px;}
+        .container {max-width: 600px; margin: auto; padding: 20px; background-color: #1dace9; border-radius: 10px; box-shadow: 0 0 10px rgba(5, 33, 136, 0.1);}
+        input, select, button {width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;}
+        button {background-color: #007bff; color: white; border: none; cursor: pointer;}
+        button:hover {background-color: #0056b3;}
+        #result {margin-top: 20px;}
+        button.print-btn {background-color: #28a745;}
+        button.print-btn:hover {background-color: #218838;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Heart Disease Prediction</h1>
+        <form id="predictForm">
+            <label>Age:</label>
+            <input type="number" step="any" name="Age" required>
+
+            <label>Sex:</label>
+            <select name="Sex" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label>Chest Pain Type:</label>
+            <select name="ChestPainType" required>
+                <option value="typical">Typical Angina</option>
+                <option value="atypical">Atypical Angina</option>
+                <option value="non-anginal">Non-anginal Pain</option>
+                <option value="asymptomatic">Asymptomatic</option>
+            </select>
+
+            <label>Resting BP:</label>
+            <input type="number" step="any" name="RestingBP" required>
+
+            <label>Cholesterol:</label>
+            <input type="number" step="any" name="Cholesterol" required>
+
+            <label>Fasting Blood Sugar (0=No, 1=Yes):</label>
+            <input type="number" min="0" max="1" name="FastingBS" required>
+
+            <label>Resting ECG:</label>
+            <select name="RestingECG" required>
+                <option value="normal">Normal</option>
+                <option value="ST-T wave abnormality">ST-T Wave Abnormality</option>
+                <option value="left ventricular hypertrophy">Left Ventricular Hypertrophy</option>
+            </select>
+
+            <label>Max Heart Rate (MaxHR):</label>
+            <input type="number" step="any" name="MaxHR" required>
+
+            <label>Exercise Angina:</label>
+            <select name="ExerciseAngina" required>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+
+            <label>Oldpeak:</label>
+            <input type="number" step="any" name="Oldpeak" required>
+
+            <label>ST Slope:</label>
+            <select name="ST_Slope" required>
+                <option value="upsloping">Upsloping</option>
+                <option value="flat">Flat</option>
+                <option value="downsloping">Downsloping</option>
+            </select>
+
+            <button type="button" onclick="predict()">Predict</button>
+        </form>
+
+        <div id="result">
+            <h2>Prediction Result:</h2>
+            <p id="prediction"></p>
+        </div>
+        <button class="print-btn" onclick="window.print()">Print This Page</button>
+    </div>
+
+    <script>
+    async function predict() {
+        const form = document.getElementById('predictForm');
+        const formData = new FormData(form);
+        const response = await fetch('/predict', {method: 'POST', body: formData});
+        const result = await response.json();
+        let emoji = result.prediction === 'No Heart Disease' ? ' 😃' : ' ❤️';
+        document.getElementById('prediction').innerText = 'Prediction: ' + (result.prediction || result.error) + emoji;
+    }
+    </script>
+</body>
+</html>
+<!-- '''
+
+# Save HTML to templates folder
+import os
+os.makedirs('templates', exist_ok=True)
+with open('templates/index.html', 'w') as f:
+    f.write(html_template) -->
